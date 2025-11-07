@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<fluxml xmlns="http://www.13cflux.net/fluxml">
+    <reactionnetwork>
+        <metabolitepools>
+            <pool atoms="2" id="A"/>
+            <pool atoms="2" id="B"/>
+            <pool atoms="4" id="C"/>
+            <pool atoms="3" id="D"/>
+            <pool atoms="2" id="E"/>
+            <pool atoms="1" id="F"/>
+            <pool atoms="1" id="G"/>
+            <pool atoms="2" id="H"/>
+        </metabolitepools>
+        <reaction bidirectional="false" id="u">
+            <reduct cfg="C#1@1 C#2@1" id="A"/>
+            <rproduct cfg="C#1@1 C#2@1" id="B"/>
+        </reaction>
+        <reaction bidirectional="false" id="p">
+            <reduct cfg="C#1@1 C#2@1 C#3@1" id="D"/>
+            <rproduct cfg="C#1@1 C#2@1" id="E"/>
+            <rproduct cfg="C#3@1" id="G"/>
+        </reaction>
+        <reaction bidirectional="false" id="q">
+            <reduct cfg="C#1@1 C#2@1" id="B"/>
+            <rproduct cfg="C#1@1 C#2@1" id="E"/>
+        </reaction>
+        <reaction bidirectional="false" id="v">
+            <reduct cfg="C#1@1 C#2@1" id="B"/>
+            <reduct cfg="C#1@2 C#2@2" id="E"/>
+            <rproduct cfg="C#1@1 C#2@1 C#1@2 C#2@2" id="C"/>
+        </reaction>
+        <reaction bidirectional="false" id="w">
+            <reduct cfg="C#1@1 C#2@1 C#3@1 C#4@1" id="C"/>
+            <rproduct cfg="C#2@1 C#3@1 C#4@1" id="D"/>
+            <rproduct cfg="C#1@1" id="F"/>
+        </reaction>
+        <reaction bidirectional="false" id="r">
+            <reduct cfg="C#1@1 C#2@1" id="E"/>
+            <rproduct cfg="C#1@1 C#2@1" id="H"/>
+        </reaction>
+        <reaction id="h_ouz">
+            <reduct cfg="C#1@1 C#2@1" id="H"/>
+        </reaction>
+        <reaction id="g_ouz">
+            <reduct cfg="C#1@1" id="G"/>
+        </reaction>
+        <reaction id="f_out">
+            <reduct cfg="C#1@1" id="F"/>
+        </reaction>
+    </reactionnetwork>
+    <constraints>
+        <net>
+            <textual>u&lt;= 5;u&gt;= 0;q&lt;= 5;q&gt;= 0;q&lt;=u;</textual>
+        </net>
+    </constraints>
+    <configuration name="ms_STAT" stationary="true">
+        <input pool="A" type="isotopomer">
+            <label cfg="00">0</label>
+            <label cfg="01">1</label>
+            <label cfg="10">0</label>
+            <label cfg="11">0</label>
+        </input>
+        <measurement>
+            <model>
+                <labelingmeasurement>
+                    <group id="H[1,2]#M0,1,2" scale="one">
+                        <textual>H[1,2]#M0,1,2</textual>
+                    </group>
+                </labelingmeasurement>
+                <fluxmeasurement>
+                    <netflux id="fm_u">
+                        <textual>u</textual>
+                    </netflux>
+                </fluxmeasurement>
+            </model>
+            <data>
+                <datum id="fm_u" stddev=".05">1</datum>
+                <datum id="H[1,2]#M0,1,2" stddev="0.010" weight="0">0</datum>
+                <datum id="H[1,2]#M0,1,2" stddev="0.010" weight="1">0.84</datum>
+                <datum id="H[1,2]#M0,1,2" stddev="0.010" weight="2">.16</datum>
+            </data>
+        </measurement>
+        <simulation method="auto" type="auto">
+            <variables>
+                <fluxvalue flux="u" type="net">1</fluxvalue>
+                <fluxvalue flux="p" type="net">0.4</fluxvalue>
+            </variables>
+        </simulation>
+    </configuration>
+    <configuration name="ms_INST" stationary="false">
+        <input pool="A" type="isotopomer">
+            <label cfg="00">0</label>
+            <label cfg="01">1</label>
+            <label cfg="10">0</label>
+            <label cfg="11">0</label>
+        </input>
+        <constraints>
+            <poolsize>
+                <textual>C=1; D=1; E=1; F=1; H=1; B&lt;= 10; G&lt;= 10;</textual>
+            </poolsize>
+        </constraints>
+        <measurement>
+            <model>
+                <labelingmeasurement>
+                    <group id="H[1,2]#M0,1,2" scale="one" times="2, 5, 10">
+                        <textual>H[1,2]#M0,1,2</textual>
+                    </group>
+                </labelingmeasurement>
+                <fluxmeasurement>
+                    <netflux id="fm_u">
+                        <textual>u</textual>
+                    </netflux>
+                </fluxmeasurement>
+            </model>
+            <data>
+                <datum id="fm_u" stddev=".05">1</datum>
+                <datum id="H[1,2]#M0,1,2" stddev="0.010" time="2" weight="0">0.8373</datum>
+                <datum id="H[1,2]#M0,1,2" stddev="0.010" time="2" weight="1">0.1626</datum>
+                <datum id="H[1,2]#M0,1,2" stddev="0.010" time="2" weight="2">0.0001</datum>
+                <datum id="H[1,2]#M0,1,2" stddev="0.010" time="5" weight="0">0.4511</datum>
+                <datum id="H[1,2]#M0,1,2" stddev="0.010" time="5" weight="1">0.5469</datum>
+                <datum id="H[1,2]#M0,1,2" stddev="0.010" time="5" weight="2">0.0020</datum>
+                <datum id="H[1,2]#M0,1,2" stddev="0.010" time="10" weight="0">0.1318</datum>
+                <datum id="H[1,2]#M0,1,2" stddev="0.010" time="10" weight="1">0.8347</datum>
+                <datum id="H[1,2]#M0,1,2" stddev="0.010" time="10" weight="2">0.0335</datum>
+            </data>
+        </measurement>
+        <simulation method="auto" type="auto">
+            <variables>
+                <fluxvalue flux="u" type="net">1</fluxvalue>
+                <fluxvalue flux="p" type="net">0.4</fluxvalue>
+                <poolsizevalue pool="B">1</poolsizevalue>
+                <poolsizevalue pool="G">1</poolsizevalue>
+            </variables>
+        </simulation>
+    </configuration>
+</fluxml>
